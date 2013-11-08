@@ -51,7 +51,8 @@
     self.autoAdjustFrameSize = NO;
     self.autoAdjustContentSize = YES;
     self.autoresizesSubviews = NO;
-    
+    self.pixelHinting = NO;
+
     [self restoreDefaultFormats];
 }
 
@@ -127,8 +128,11 @@
                 absolutePosition = (self.innerFrameSize.width / 2) - ((item.view.frame.size.width + (item.padding.right - item.padding.left)) / 2);
             }
             
+        }        
+        if (self.pixelHinting) {
+            absolutePosition = round(absolutePosition);
         }
-        
+
         relativePosition += startPadding;
         
         CGFloat currentOffset = 0.0;
@@ -156,6 +160,9 @@
         
         relativePosition += currentOffset + endPadding;
         
+        if (self.pixelHinting) {
+            relativePosition = ceil(relativePosition);
+        }
     }
     
     if (self.autoAdjustFrameSize == YES) {
