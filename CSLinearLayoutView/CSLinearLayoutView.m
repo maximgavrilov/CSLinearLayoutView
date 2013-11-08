@@ -129,9 +129,6 @@
             }
             
         }        
-        if (self.pixelHinting) {
-            absolutePosition = round(absolutePosition);
-        }
 
         relativePosition += startPadding;
         
@@ -156,13 +153,12 @@
             item.view.frame = CGRectMake(absolutePosition, relativePosition, width, item.view.frame.size.height);
             currentOffset = item.view.frame.size.height;
             
+            if (self.pixelHinting) {
+                item.view.frame = CGRectIntegral(item.view.frame);
+            }
         }
         
         relativePosition += currentOffset + endPadding;
-        
-        if (self.pixelHinting) {
-            relativePosition = ceil(relativePosition);
-        }
     }
     
     if (self.autoAdjustFrameSize == YES) {
